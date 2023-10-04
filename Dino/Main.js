@@ -10,10 +10,10 @@ window.addEventListener('load', function(){
             this.height = height;
         }
         update(){
-
+            //TESTING
         }
         draw(){
-
+            //TESTING
         }
     }
 });
