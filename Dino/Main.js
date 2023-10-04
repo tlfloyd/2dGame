@@ -6,6 +6,8 @@ window.addEventListener('load', function(){
     const ctx = canvas.getContext('2d');
     canvas.width = 1000;
     canvas.height = 1000;
+    let gameFrame = 0;
+    let staggerFrames = 2;
 
     class Game{
         constructor(width, height){
@@ -29,6 +31,11 @@ window.addEventListener('load', function(){
         ctx.clearRect(0,0, canvas.width, canvas.height);
         game.update();
         game.draw(ctx);
+        if (gameFrame % staggerFrames == 0){
+            if (game.player.frameX < 6) game.player.frameX++;
+            else game.player.frameX = 0;
+        }
+        gameFrame++;
         requestAnimationFrame(animate);
     }
     animate();
