@@ -1,6 +1,6 @@
 export class Player {
-    contructor(){
-        //this.game = game;
+    constructor(game){
+        this.game = game;
         this.width = 100;
         this.height = 100;
         this.x = 0;
