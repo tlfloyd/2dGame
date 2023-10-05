@@ -5,20 +5,20 @@ export class Player {
         this.height = 5230 / 10;
         this.x = 0;
         this.y = this.game.height - this.height;
+        this.vx = 0;
         this.vy = 0;
         this.weight = 1;
         this.image = document.getElementById('player');
-        this.speed = 0;
         this.maxSpeed = 10;
         this.frameX = 0;
         this.frameY = 0;
     }
     update(inputs){
         //Horizontal Movement
-        this.x += this.speed;
-        if (inputs.includes('ArrowRight')) this.speed = this.maxSpeed;
-        else if (inputs.includes('ArrowLeft')) this.speed = -this.maxSpeed;
-        else this.speed = 0;
+        this.x += this.vx;
+        if (inputs.includes('ArrowRight')) this.vx = this.maxSpeed;
+        else if (inputs.includes('ArrowLeft')) this.vx = -this.maxSpeed;
+        else this.vx = 0;
 
         //Boundaries
         if (this.x < 0) this.x = 0;
@@ -31,7 +31,7 @@ export class Player {
         else this.vy = 0;
     }
     draw(context){
-        context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
+        context.drawImage(this.image, this.frameX, this.frameY, this.width, this.height, this.x, this.y, this.width, this.height);
     }
     onGround(){
         return this.y >= this.game.height - this.height;
