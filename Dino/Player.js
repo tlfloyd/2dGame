@@ -1,12 +1,13 @@
 export class Player {
     constructor(game){
         this.game = game;
-        this.width = (6876 / 12) + 2;
-        this.height = 5230 / 10;
+        this.width = (1200 / 12) + 0.4;
+        this.height = 913 / 10;
         this.x = 0;
-        this.y = this.game.height - this.height;
+        this.y = this.game.height - this.height - this.game.groundMargin;
         this.vx = 0;
         this.vy = 0;
+        this.jumpHeight = 30;
         this.weight = 1;
         this.image_right = document.getElementById('player_right');
         this.image_left = document.getElementById('player_left');
@@ -18,8 +19,8 @@ export class Player {
     update(inputs){
         //Horizontal Movement
         this.x += this.vx;
-        if (inputs.includes('ArrowRight')) this.vx = this.maxSpeed;
-        else if (inputs.includes('ArrowLeft')) this.vx = -this.maxSpeed;
+        if (inputs.includes('ArrowRight') && !inputs.includes('ArrowLeft')) this.vx = this.maxSpeed;
+        else if (inputs.includes('ArrowLeft') && !inputs.includes('ArrowRight')) this.vx = -this.maxSpeed;
         else this.vx = 0;
 
         //Boundaries
@@ -27,17 +28,13 @@ export class Player {
         if (this.x > this.game.width - this.width) this.x = this.game.width - this.width;
 
         //Vertical Movement
-        if (inputs.includes('ArrowUp') && this.onGround()) this.vy -= 20;
+        if (inputs.includes('ArrowUp') && this.onGround()) this.vy -= this.jumpHeight;
         this.y += this.vy;
         if (!this.onGround()) this.vy += this.weight;
         else this.vy = 0;
 
-        if (inputs.includes('ArrowRight') && !inputs.includes('ArrowLeft')) {
-            this.facing = 1;
-        }
-        else if (inputs.includes('ArrowLeft') && !inputs.includes('ArrowRight')) {
-            this.facing = -1;
-        }
+        //Facing direction
+        this.facing = this.game.input.facing;
         console.log(this.facing);
     }
     draw(context){
@@ -45,10 +42,10 @@ export class Player {
             context.drawImage(this.image_right, this.frameX, this.frameY, this.width, this.height, this.x, this.y, this.width, this.height);
         }
         else if (this.facing == -1) {
-            context.drawImage(this.image_left, 6876 - 575 - this.frameX, this.frameY, this.width, this.height, this.x, this.y, this.width, this.height);
+            context.drawImage(this.image_left, 1200 - 100 - this.frameX, this.frameY, this.width, this.height, this.x, this.y, this.width, this.height);
         }
     }
     onGround(){
-        return this.y >= this.game.height - this.height;
+        return this.y >= this.game.height - this.height - this.game.groundMargin;
     }
 }

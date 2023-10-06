@@ -1,11 +1,12 @@
 import { Player } from './Player.js';
 import { InputHandler} from './Input.js';
+import { Background } from './Background.js';
 
 window.addEventListener('load', function(){
     const canvas = document.getElementById('canvas1');
     const ctx = canvas.getContext('2d');
     canvas.width = 1000;
-    canvas.height = 1000;
+    canvas.height = 970;
     let gameFrame = 0;
     let staggerFrames = 4;
 
@@ -59,11 +60,14 @@ window.addEventListener('load', function(){
         constructor(width, height){
             this.width = width;
             this.height = height;
+            this.groundMargin = 71;
             this.player = new Player(this);
             this.input = new InputHandler();
+            this.background = new Background(this);
         }
         update(){
             this.player.update(this.input.keys);
+            this.background.update(this.player.vx);
             if (this.player.vx === 0 && this.player.vy === 0) playerState = 'idle';
             else if (this.player.vy > 0) playerState = 'fall';
             else if (this.player.vy < 0) playerState = 'jump';
@@ -76,6 +80,7 @@ window.addEventListener('load', function(){
                 }
         }
         draw(context){
+            this.background.draw(context);
             this.player.draw(context);
         }
     }
