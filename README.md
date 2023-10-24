@@ -5,11 +5,15 @@ It is still a work in progress, so I have highlighted what is currently implemen
 
 I have implemented the following:
 
+
 -WASD Controls to control the player sprite
+
 
 -Draw loops to animate the player sprite, pulling from a sprite sheet
 
+
 -Recognize player inputs or player states to draw the appropriate animation
+
 
 -An infinitely scrolling background, forward and backward
 
